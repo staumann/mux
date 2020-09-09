@@ -2,6 +2,13 @@ package mux
 
 import "net/http"
 
+type Mux interface {
+	HandleFunc(pattern string, handler func(writer http.ResponseWriter, request *http.Request))
+	HasHandlerForPattern(pattern string) bool
+	Handle(pattern string, handler http.Handler)
+	GetAllRoutes() []string
+}
+
 // ExtendedMux is a struct extending http.ServerMux additionally it contains a map of all routes so it is easier to check all registered routes
 type extendedMux struct {
 	http.ServeMux
